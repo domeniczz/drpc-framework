@@ -5,30 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.domenic</groupId>
-        <artifactId>drpc</artifactId>
+        <artifactId>drpc-framework</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.domenic</groupId>
-    <artifactId>drpc-demo</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>drpc-common</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
 </project>

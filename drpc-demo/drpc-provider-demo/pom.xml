@@ -7,10 +7,10 @@
         <groupId>com.domenic</groupId>
         <artifactId>drpc</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <groupId>com.domenic</groupId>
-    <artifactId>drpc-demo</artifactId>
+    <artifactId>drpc-provider-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -21,13 +21,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
+            <groupId>com.domenic</groupId>
+            <artifactId>drpc-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

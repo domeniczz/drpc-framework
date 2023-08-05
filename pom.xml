@@ -4,12 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.domenic</groupId>
+    <groupId>com.domenic</groupId>
     <artifactId>drpc</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>netty-demo</module>
+        <module>drpc-demo</module>
+        <module>drpc-demo/drpc-api</module>
+        <module>drpc-demo/drpc-consumer-demo</module>
+        <module>drpc-demo/drpc-provider-demo</module>
+        <module>drpc-framework</module>
+        <module>drpc-manager</module>
     </modules>
 
     <properties>
@@ -17,8 +22,19 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <netty.version>4.1.95.Final</netty.version>
+        <fastjson2.version>2.0.23</fastjson2.version>
+        <lombok.version>1.18.8</lombok.version>
+        <logback.version>1.4.5</logback.version>
         <junit.jupiter.version>5.6.3</junit.jupiter.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -26,6 +42,21 @@
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
                 <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

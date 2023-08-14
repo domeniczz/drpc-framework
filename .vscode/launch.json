@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ManagerApplication",
+            "request": "launch",
+            "mainClass": "com.domenic.ManagerApplication",
+            "projectName": "drpc-manager"
+        },
+        {
+            "type": "java",
+            "name": "ProviderApplication",
+            "request": "launch",
+            "mainClass": "com.domenic.ProviderApplication",
+            "projectName": "drpc-provider-demo"
+        },
+        {
+            "type": "java",
+            "name": "ConsumerApplication",
+            "request": "launch",
+            "mainClass": "com.domenic.ConsumerApplication",
+            "projectName": "drpc-consumer-demo"
+        }
+    ]
+}

@@ -1,0 +1,5 @@
+{
+    "java.settings.url": ".vscode/settings.properties",
+    // "java.settings.url": "https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml",
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

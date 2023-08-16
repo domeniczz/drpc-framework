@@ -1,6 +1,6 @@
-package com.domenic.impl;
+package com.domenic.service.impl;
 
-import com.domenic.HelloDrpc;
+import com.domenic.service.HelloDrpc;
 
 /**
  * @author Domenic

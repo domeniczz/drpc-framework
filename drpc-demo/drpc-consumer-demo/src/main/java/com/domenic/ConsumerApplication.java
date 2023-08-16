@@ -1,6 +1,8 @@
 package com.domenic;
 
-import com.domenic.discovery.RegistryConfig;
+import com.domenic.config.ReferenceConfig;
+import com.domenic.config.RegistryConfig;
+import com.domenic.service.HelloDrpc;
 
 /**
  * @author Domenic
@@ -22,7 +24,7 @@ public class ConsumerApplication {
         DrpcBootstrap.getInstance()
                 .application("demo-drpc-consumer")
                 // connect to the registry center
-                .registry(new RegistryConfig(Constants.ZK_ADDRESS))
+                .registry(new RegistryConfig(Constants.DEFAULT_ADDRESS))
                 // get a reference to the service
                 .reference(reference);
 

@@ -2,24 +2,27 @@
     "configurations": [
         {
             "type": "java",
-            "name": "ManagerApplication",
+            "name": "ConsumerApplication",
             "request": "launch",
-            "mainClass": "com.domenic.ManagerApplication",
-            "projectName": "drpc-manager"
+            "mainClass": "com.domenic.ConsumerApplication",
+            "projectName": "drpc-consumer-demo",
+            "vmArgs": "-Dfile.encoding=UTF-8"
         },
         {
             "type": "java",
             "name": "ProviderApplication",
             "request": "launch",
             "mainClass": "com.domenic.ProviderApplication",
-            "projectName": "drpc-provider-demo"
+            "projectName": "drpc-provider-demo",
+            "vmArgs": "-Dfile.encoding=UTF-8"
         },
         {
             "type": "java",
-            "name": "ConsumerApplication",
+            "name": "ManagerApplication",
             "request": "launch",
-            "mainClass": "com.domenic.ConsumerApplication",
-            "projectName": "drpc-consumer-demo"
+            "mainClass": "com.domenic.ManagerApplication",
+            "projectName": "drpc-manager",
+            "vmArgs": "-Dfile.encoding=UTF-8"
         }
     ]
 }

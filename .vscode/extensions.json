@@ -1,0 +1,45 @@
+{
+    "recommendations": [
+        /* language support */
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-java-dependency",
+        "vscjava.vscode-java-debug",
+        "vscjava.vscode-java-test",
+        "vscjava.vscode-maven",
+        "redhat.java",
+        "redhat.fabric8-analytics",
+        "dotjoshjohnson.xml",
+
+        /* spring boot support */
+        "vscjava.vscode-spring-boot-dashboard",
+        "vmware.vscode-spring-boot",
+        "vscjava.vscode-spring-initializr",
+
+        /* linting tools */
+        "sonarsource.sonarlint-vscode",
+        "rectcircle.vscode-p3c",
+
+        /* ai tools */
+        "bito.bito",
+        "codeium.codeium",
+        "github.copilot",
+
+        /* auto-completion tools */
+        "visualstudioexptteam.vscodeintellic",
+        "visualstudioexptteam.intellicode-api-usage-examples",
+
+        /* git tools */
+        "eamodio.gitlens",
+
+        /* themes */
+        "zhuangtongfa.material-theme",
+        "pkief.material-icon-theme",
+
+        /* other tools */
+        "anweber.vscode-httpyac",
+        "christian-kohler.path-intellisense",
+        "kisstkondoros.vscode-gutter-preview",
+    ],
+    "unwantedRecommendations": [
+    ]
+}

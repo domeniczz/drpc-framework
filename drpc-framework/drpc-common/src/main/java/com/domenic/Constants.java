@@ -11,13 +11,19 @@ public class Constants {
     private Constants() {
     }
 
-    public static final String ZK_HOST = System.getProperty("zookeeper.address", "127.0.0.1");
-    public static final String ZK_PORT = System.getProperty("zookeeper.port", "2181");
-    public static final String ZK_ADDRESS = /* "zookeeper://" +  */ZK_HOST + ":" + ZK_PORT;
+    public static final String PATH_SEPARATOR = "/";
 
-    public static final int DEFAULT_ZK_TIMEOUT = 50000;
+    private static final String TYPE_PREFIX = "zookeeper://";
+    private static final String HOST = System.getProperty("zookeeper.address", "127.0.0.1");
+    private static final String PORT = System.getProperty("zookeeper.port", "2181");
 
-    public static final String BASE_PROVIDERS_PATH = "/drpc-metadata/providers";
-    public static final String BASE_CONSUMERS_PATH = "/drpc-metadata/consumers";
+    public static final String DEFAULT_ADDRESS = TYPE_PREFIX + HOST + ":" + PORT;
+    public static final int DEFAULT_TIMEOUT = 50000;
+
+    public static final String BASE_ROOT_PATH = PATH_SEPARATOR + "drpc-metadata";
+    public static final String BASE_PROVIDERS_PATH = BASE_ROOT_PATH + PATH_SEPARATOR + "providers";
+    public static final String BASE_CONSUMERS_PATH = BASE_ROOT_PATH + PATH_SEPARATOR + "consumers";
+
+    public static final int LOCAL_HOST_PORT = 8088;
 
 }

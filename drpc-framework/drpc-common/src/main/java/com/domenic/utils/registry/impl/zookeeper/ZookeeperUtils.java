@@ -1,4 +1,4 @@
-package com.domenic.utils.zookeeper;
+package com.domenic.utils.registry.impl.zookeeper;
 
 import com.domenic.Constants;
 import com.domenic.exceptions.ZookeeperException;
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @author Domenic
  * @Classname ZookeeperUtils
- * @Description Zookeeper utils
+ * @Description Zookeeper Utils
  * @Created by Domenic
  */
 @Slf4j
@@ -33,9 +33,9 @@ public class ZookeeperUtils {
      */
     public static ZooKeeper connect() {
         // connection string
-        String connectString = Constants.ZK_ADDRESS;
+        String connectString = Constants.DEFAULT_ADDRESS;
         // zookeeper timeout
-        int timeout = Constants.DEFAULT_ZK_TIMEOUT;
+        int timeout = Constants.DEFAULT_TIMEOUT;
         return connect(connectString, timeout);
     }
 
@@ -63,10 +63,10 @@ public class ZookeeperUtils {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             log.error("Establishing Zookeeper connection was interrupted: {}", e);
-            throw new ZookeeperException();
+            throw new ZookeeperException(e);
         } catch (IOException e) {
             log.error("Exception while creating Zookeeper connection: {}", e);
-            throw new ZookeeperException();
+            throw new ZookeeperException(e);
         }
     }
 
@@ -80,12 +80,12 @@ public class ZookeeperUtils {
                 zk.close();
             } else {
                 log.error("Zookeeper connection is null! Cannot close it!");
-                throw new ZookeeperException();
+                throw new ZookeeperException("Zookeeper connection is null! Cannot close it!");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             log.error("Close Zookeeper connection was interrupted: {}", e);
-            throw new ZookeeperException();
+            throw new ZookeeperException(e);
         }
     }
 
@@ -99,28 +99,27 @@ public class ZookeeperUtils {
      */
     public static Boolean createNode(ZooKeeper zk, ZookeeperNode node, Watcher watcher, CreateMode createMode) {
         try {
-            if (zk != null) {
-                if (zk.exists(node.getNodePath(), watcher) == null) {
-                    String result = zk.create(node.getNodePath(), node.getData(), ZooDefs.Ids.OPEN_ACL_UNSAFE, createMode);
-                    log.info("Node created: {}", result);
-                    return true;
-                } else {
-                    if (log.isDebugEnabled()) {
-                        log.info("Node already exists, node path: {}", node.getNodePath());
-                    }
-                    return false;
-                }
-            } else {
+            if (zk == null) {
                 log.error("Zookeeper connection is null! Cannot create node!");
-                throw new ZookeeperException();
+                throw new ZookeeperException("Zookeeper connection is null! Cannot create node!");
+            }
+            if (zk.exists(node.getNodePath(), watcher) == null) {
+                String result = zk.create(node.getNodePath(), node.getData(), ZooDefs.Ids.OPEN_ACL_UNSAFE, createMode);
+                log.info("Node created: {}", result);
+                return true;
+            } else {
+                if (log.isDebugEnabled()) {
+                    log.info("Node already exists, node path: {}", node.getNodePath());
+                }
+                return false;
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             log.error("Creating Zookeeper node was interrupted: {}", e);
-            throw new ZookeeperException();
+            throw new ZookeeperException(e);
         } catch (KeeperException e) {
             log.error("Exception while creating Zookeeper node: {}", e);
-            throw new ZookeeperException();
+            throw new ZookeeperException(e);
         }
     }
 
@@ -137,12 +136,12 @@ public class ZookeeperUtils {
                 return zk.exists(node, watcher) != null;
             } else {
                 log.error("Zookeeper connection is null! Cannot check node existance!");
-                throw new ZookeeperException();
+                throw new ZookeeperException("Zookeeper connection is null! Cannot check node existance!");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             log.error("Checking Zookeeper node existance was interrupted: {}", e);
-            throw new ZookeeperException();
+            throw new ZookeeperException(e);
         } catch (KeeperException e) {
             log.error("Exception while checking Zookeeper node ({}) existance: {}", node, e);
             throw new ZookeeperException(e);
@@ -162,12 +161,12 @@ public class ZookeeperUtils {
                 return zk.getChildren(serviceNode, watcher);
             } else {
                 log.error("Zookeeper connection is null! Cannot get node children!");
-                throw new ZookeeperException();
+                throw new ZookeeperException("Zookeeper connection is null! Cannot get node children!");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             log.error("Getting Zookeeper node children was interrupted: {}", e);
-            throw new ZookeeperException();
+            throw new ZookeeperException(e);
         } catch (KeeperException e) {
             log.error("Exception while getting Zookeeper node (service node: {}) children: {}", serviceNode, e);
             throw new ZookeeperException(e);

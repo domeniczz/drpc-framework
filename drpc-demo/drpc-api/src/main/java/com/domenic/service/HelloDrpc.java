@@ -1,4 +1,4 @@
-package com.domenic;
+package com.domenic.service;
 
 /**
  * @author Domenic

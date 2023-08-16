@@ -1,7 +1,7 @@
 package com.domenic;
 
-import com.domenic.utils.zookeeper.ZookeeperNode;
-import com.domenic.utils.zookeeper.ZookeeperUtils;
+import com.domenic.utils.registry.impl.zookeeper.ZookeeperNode;
+import com.domenic.utils.registry.impl.zookeeper.ZookeeperUtils;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooKeeper;
@@ -17,30 +17,34 @@ import java.util.List;
 public class ManagerApplication {
 
     public static void main(String[] args) {
-        initZk();
+        initRegistryCenter();
     }
 
     /**
-     * Initialize Zookeeper (create basic nodes)
+     * <p>Initialize Registry Center (create basic structure)</p>
+     * <p>
+     * Nodes tructure:<br/>
+     * /<br/>
+     *   ∟ /drpc-metadata<br/>
+     *       ∟ /providers<br/>
+     *       ∟ /consumers<br/>
+     * </p>
      */
-    private static void initZk() {
+    private static void initRegistryCenter() {
         // establish Zookeeper connection
-        ZooKeeper zooKeeper = ZookeeperUtils.connect();
+        ZooKeeper zk = ZookeeperUtils.connect();
 
         // define node's metadata
-        String basePath = "/drpc-metadata";
-        String providerPath = basePath + "/providers";
-        String consumersPath = basePath + "/consumers";
-        ZookeeperNode baseNode = new ZookeeperNode(basePath, null);
-        ZookeeperNode providersNode = new ZookeeperNode(providerPath, null);
-        ZookeeperNode consumersNode = new ZookeeperNode(consumersPath, null);
+        ZookeeperNode baseNode = new ZookeeperNode(Constants.BASE_ROOT_PATH, null);
+        ZookeeperNode providersNode = new ZookeeperNode(Constants.BASE_PROVIDERS_PATH, null);
+        ZookeeperNode consumersNode = new ZookeeperNode(Constants.BASE_CONSUMERS_PATH, null);
 
         // create basic nodes
         List.of(baseNode, providersNode, consumersNode)
-                .forEach(node -> ZookeeperUtils.createNode(zooKeeper, node, null, CreateMode.PERSISTENT));
+                .forEach(node -> ZookeeperUtils.createNode(zk, node, null, CreateMode.PERSISTENT));
 
         // close Zookeeper connection
-        ZookeeperUtils.close(zooKeeper);
+        ZookeeperUtils.close(zk);
     }
 
 }

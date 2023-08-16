@@ -1,4 +1,4 @@
-package com.domenic;
+package com.domenic.config;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -28,7 +28,7 @@ public class ReferenceConfig<T> {
     @SuppressWarnings("unchecked")
     public T get() {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        Class<?>[] classes = new Class[]{referenceInterface};
+        Class<?>[] classes = new Class[] { referenceInterface };
 
         // Get a proxy instance by using dynamic proxy
         return (T) Proxy.newProxyInstance(classLoader, classes, new InvocationHandler() {

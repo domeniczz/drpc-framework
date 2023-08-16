@@ -1,4 +1,4 @@
-package com.domenic.utils.zookeeper;
+package com.domenic.utils.registry.impl.zookeeper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,10 +1,17 @@
 package com.domenic;
 
-import com.domenic.discovery.RegistryConfig;
-import lombok.extern.slf4j.Slf4j;
+import com.domenic.builder.RegistryBuilder;
+import com.domenic.config.ProtocolConfig;
+import com.domenic.config.ReferenceConfig;
+import com.domenic.config.RegistryConfig;
+import com.domenic.config.ServiceConfig;
+import com.domenic.discovery.Registry;
 
-import java.rmi.registry.Registry;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Domenic
@@ -23,8 +30,15 @@ public class DrpcBootstrap {
     private String appName = "default";
     private RegistryConfig registryConfig;
     private ProtocolConfig protocolConfig;
-    private int port = 8088;
+
+    // registry center
     private Registry registry;
+
+    /**
+     * <p>A list for published services</p>
+     * <p>key: interface's fully qualified name; value: ServiceConfig</p>
+     */
+    private static final Map<String, ServiceConfig<?>> SERVICES = new ConcurrentHashMap<>(16);
 
     private DrpcBootstrap() {
     }
@@ -49,7 +63,8 @@ public class DrpcBootstrap {
      * @return current instance
      */
     public DrpcBootstrap registry(RegistryConfig registryConfig) {
-        // this.registry = registryConfig.getRegistry();
+        this.registryConfig = registryConfig;
+        this.registry = new RegistryBuilder().build(registryConfig);
         return this;
     }
 
@@ -72,9 +87,8 @@ public class DrpcBootstrap {
      * @return current instance
      */
     public DrpcBootstrap service(ServiceConfig<?> service) {
-        if (log.isDebugEnabled()) {
-            log.debug("Published a service: ", protocolConfig.toString());
-        }
+        registry.register(service);
+        SERVICES.put(service.getInterface().getName(), service);
         return this;
     }
 
@@ -84,8 +98,8 @@ public class DrpcBootstrap {
      * @return current instance
      */
     public DrpcBootstrap services(List<ServiceConfig<?>> services) {
-        if (log.isDebugEnabled()) {
-            log.debug("Published a list of services: ", protocolConfig.toString());
+        for (ServiceConfig<?> service : services) {
+            this.service(service);
         }
         return this;
     }
@@ -94,6 +108,12 @@ public class DrpcBootstrap {
      * start the service
      */
     public void start() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -76,7 +76,7 @@ public class DrpcBootstrap {
     public DrpcBootstrap protocol(ProtocolConfig protocolConfig) {
         this.protocolConfig = protocolConfig;
         if (log.isDebugEnabled()) {
-            log.debug("The project uses protocol: ", protocolConfig.toString());
+            log.debug("The project uses protocol: {}", protocolConfig.toString());
         }
         return this;
     }
@@ -122,6 +122,7 @@ public class DrpcBootstrap {
      * @return current instance
      */
     public DrpcBootstrap reference(ReferenceConfig<?> reference) {
+        reference.setRegistry(registry);
         return this;
     }
 

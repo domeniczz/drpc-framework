@@ -52,7 +52,7 @@ public class ZookeeperRegistry implements Registry {
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("Registered a service: ", service.getInterface().getName());
+            log.debug("Registered a service: {}", service.getInterface().getName());
         }
     }
 
@@ -72,7 +72,7 @@ public class ZookeeperRegistry implements Registry {
         }).toList();
 
         if (inetSocketAddresses.isEmpty()) {
-            throw new DiscoveryException("No available hosts found for service: " + serviceName);
+            throw new DiscoveryException("No available hosts found for service: {}" + serviceName);
         }
 
         // return the first host in the list

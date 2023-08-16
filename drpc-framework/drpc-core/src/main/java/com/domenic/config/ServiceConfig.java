@@ -3,7 +3,7 @@ package com.domenic.config;
 /**
  * @author Domenic
  * @Classname ServiceConfig
- * @Description TODO
+ * @Description Service Config
  * @Created by Domenic
  */
 public class ServiceConfig<T> {

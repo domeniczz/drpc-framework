@@ -1,4 +1,4 @@
-package com.domenic.utils;
+package com.domenic.utils.network;
 
 import com.domenic.exceptions.NetworkException;
 
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @author Domenic
  * @Classname NetUtils
- * @Description TODO
+ * @Description Network Utils
  * @Created by Domenic
  */
 @Slf4j

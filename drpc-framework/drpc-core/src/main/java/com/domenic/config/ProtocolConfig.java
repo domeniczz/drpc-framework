@@ -3,7 +3,7 @@ package com.domenic.config;
 /**
  * @author Domenic
  * @Classname ProtocolConfig
- * @Description TODO
+ * @Description Protocol Config
  * @Created by Domenic
  */
 public class ProtocolConfig {

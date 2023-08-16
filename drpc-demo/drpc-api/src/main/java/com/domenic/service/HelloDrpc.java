@@ -3,7 +3,7 @@ package com.domenic.service;
 /**
  * @author Domenic
  * @Classname HelloDrpc
- * @Description TODO
+ * @Description Hello Drpc Service Interface
  * @Created by Domenic
  */
 public interface HelloDrpc {

@@ -1,10 +1,10 @@
 package com.domenic.discovery.impl;
 
-import com.domenic.Constants;
 import com.domenic.config.ServiceConfig;
+import com.domenic.constants.RegistryConstants;
 import com.domenic.discovery.Registry;
 import com.domenic.exceptions.DiscoveryException;
-import com.domenic.utils.NetUtils;
+import com.domenic.utils.network.NetUtils;
 import com.domenic.utils.registry.impl.zookeeper.ZookeeperNode;
 import com.domenic.utils.registry.impl.zookeeper.ZookeeperUtils;
 
@@ -38,14 +38,14 @@ public class ZookeeperRegistry implements Registry {
     @Override
     public void register(ServiceConfig<?> service) {
         // register service node to the registry center
-        String serviceNode = Constants.BASE_PROVIDERS_PATH + Constants.PATH_SEPARATOR + service.getInterface().getName();
+        String serviceNode = RegistryConstants.BASE_PROVIDERS_PATH + RegistryConstants.PATH_SEPARATOR + service.getInterface().getName();
         if (!ZookeeperUtils.exists(zk, serviceNode, null)) {
             ZookeeperNode node = new ZookeeperNode(serviceNode, null);
             ZookeeperUtils.createNode(zk, node, null, CreateMode.PERSISTENT);
         }
 
         // register the host to the registry center
-        String hostNode = serviceNode + Constants.PATH_SEPARATOR + NetUtils.getIp() + ":" + Constants.LOCAL_HOST_PORT;
+        String hostNode = serviceNode + RegistryConstants.PATH_SEPARATOR + NetUtils.getIp() + ":" + RegistryConstants.LOCAL_HOST_PORT;
         if (!ZookeeperUtils.exists(zk, hostNode, null)) {
             ZookeeperNode node = new ZookeeperNode(hostNode, null);
             ZookeeperUtils.createNode(zk, node, null, CreateMode.EPHEMERAL);
@@ -59,7 +59,7 @@ public class ZookeeperRegistry implements Registry {
     @Override
     public InetSocketAddress lookup(String serviceName) {
         // concat the service node path
-        String serviceNode = Constants.BASE_PROVIDERS_PATH + Constants.PATH_SEPARATOR + serviceName;
+        String serviceNode = RegistryConstants.BASE_PROVIDERS_PATH + RegistryConstants.PATH_SEPARATOR + serviceName;
 
         // get its the children nodes (represents the hosts that provides the service)
         List<String> hostNode = ZookeeperUtils.getChildren(zk, serviceNode, null);

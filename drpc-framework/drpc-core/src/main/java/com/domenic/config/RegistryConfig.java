@@ -3,7 +3,7 @@ package com.domenic.config;
 /**
  * @author Domenic
  * @Classname RegistryConfig
- * @Description TODO
+ * @Description Registry Config
  * @Created by Domenic
  */
 public class RegistryConfig {

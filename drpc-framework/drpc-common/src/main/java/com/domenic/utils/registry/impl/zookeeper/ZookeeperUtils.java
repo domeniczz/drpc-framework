@@ -1,7 +1,8 @@
 package com.domenic.utils.registry.impl.zookeeper;
 
-import com.domenic.Constants;
+import com.domenic.constants.RegistryConstants;
 import com.domenic.exceptions.ZookeeperException;
+import com.domenic.utils.registry.RegistryUtils;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
@@ -33,9 +34,9 @@ public class ZookeeperUtils {
      */
     public static ZooKeeper connect() {
         // connection string
-        String connectString = Constants.DEFAULT_ADDRESS;
+        String connectString = RegistryUtils.getConnectionAddress(RegistryConstants.DEFAULT_ADDRESS);
         // zookeeper timeout
-        int timeout = Constants.DEFAULT_TIMEOUT;
+        int timeout = RegistryConstants.DEFAULT_TIMEOUT;
         return connect(connectString, timeout);
     }
 

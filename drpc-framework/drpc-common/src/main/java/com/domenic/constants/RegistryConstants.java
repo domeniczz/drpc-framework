@@ -1,4 +1,4 @@
-package com.domenic;
+package com.domenic.constants;
 
 /**
  * @author Domenic
@@ -6,9 +6,9 @@ package com.domenic;
  * @Description common constants
  * @Created by Domenic
  */
-public class Constants {
+public class RegistryConstants {
 
-    private Constants() {
+    private RegistryConstants() {
     }
 
     public static final String PATH_SEPARATOR = "/";

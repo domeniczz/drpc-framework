@@ -1,5 +1,6 @@
 package com.domenic;
 
+import com.domenic.constants.RegistryConstants;
 import com.domenic.utils.registry.impl.zookeeper.ZookeeperNode;
 import com.domenic.utils.registry.impl.zookeeper.ZookeeperUtils;
 
@@ -35,9 +36,9 @@ public class ManagerApplication {
         ZooKeeper zk = ZookeeperUtils.connect();
 
         // define node's metadata
-        ZookeeperNode baseNode = new ZookeeperNode(Constants.BASE_ROOT_PATH, null);
-        ZookeeperNode providersNode = new ZookeeperNode(Constants.BASE_PROVIDERS_PATH, null);
-        ZookeeperNode consumersNode = new ZookeeperNode(Constants.BASE_CONSUMERS_PATH, null);
+        ZookeeperNode baseNode = new ZookeeperNode(RegistryConstants.BASE_ROOT_PATH, null);
+        ZookeeperNode providersNode = new ZookeeperNode(RegistryConstants.BASE_PROVIDERS_PATH, null);
+        ZookeeperNode consumersNode = new ZookeeperNode(RegistryConstants.BASE_CONSUMERS_PATH, null);
 
         // create basic nodes
         List.of(baseNode, providersNode, consumersNode)

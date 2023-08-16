@@ -1,15 +1,17 @@
 package com.domenic;
 
+import com.domenic.bootstrap.DrpcBootstrap;
 import com.domenic.config.ProtocolConfig;
 import com.domenic.config.RegistryConfig;
 import com.domenic.config.ServiceConfig;
+import com.domenic.constants.RegistryConstants;
 import com.domenic.service.HelloDrpc;
 import com.domenic.service.impl.HelloDrpcImpl;
 
 /**
  * @author Domenic
  * @Classname ProviderApplication
- * @Description TODO
+ * @Description Provider Application
  * @Created by Domenic
  */
 public class ProviderApplication {
@@ -24,7 +26,7 @@ public class ProviderApplication {
         DrpcBootstrap.getInstance()
                 .application("demo-drpc-provider")
                 // connect to the registry center
-                .registry(new RegistryConfig(Constants.DEFAULT_ADDRESS))
+                .registry(new RegistryConfig(RegistryConstants.DEFAULT_ADDRESS))
                 .protocol(new ProtocolConfig("drpc"))
                 // register (publish) the service
                 .service(service)

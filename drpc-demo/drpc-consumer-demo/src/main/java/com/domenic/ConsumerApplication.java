@@ -1,9 +1,9 @@
 package com.domenic;
 
-import com.domenic.bootstrap.DrpcBootstrap;
 import com.domenic.config.ReferenceConfig;
 import com.domenic.config.RegistryConfig;
 import com.domenic.constants.RegistryConstants;
+import com.domenic.drpc.DrpcBootstrap;
 import com.domenic.service.HelloDrpc;
 
 /**

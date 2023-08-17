@@ -45,14 +45,15 @@ public class ZookeeperRegistry implements Registry {
         }
 
         // register the host to the registry center
-        String hostNode = serviceNode + RegistryConstants.PATH_SEPARATOR + NetUtils.getIp() + ":" + RegistryConstants.LOCAL_HOST_PORT;
+        String addr = NetUtils.getIp() + ":" + RegistryConstants.LOCAL_HOST_PORT;
+        String hostNode = serviceNode + RegistryConstants.PATH_SEPARATOR + addr;
         if (!ZookeeperUtils.exists(zk, hostNode, null)) {
             ZookeeperNode node = new ZookeeperNode(hostNode, null);
             ZookeeperUtils.createNode(zk, node, null, CreateMode.EPHEMERAL);
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("Registered a service: {}", service.getInterface().getName());
+            log.debug("Registered a service: {} ({})", service.getInterface().getName(), addr);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.domenic.builder;
+package com.domenic.discovery.builder;
 
 import com.domenic.config.RegistryConfig;
 import com.domenic.discovery.Registry;
@@ -18,14 +18,11 @@ public class RegistryBuilder {
     public Registry build(RegistryConfig config) {
         String registryType = RegistryUtils.getRegistryType(config.getConnectString());
         String connectionAddr = RegistryUtils.getConnectionAddress(config.getConnectString());
-        switch (registryType) {
-            case "zookeeper":
-                return new ZookeeperRegistry(connectionAddr, config.getTimeout());
-            case "nacos":
-                return new NacosRegistry(connectionAddr, config.getTimeout());
-            default:
-                throw new DiscoveryException("Unsupported registry type: " + registryType);
-        }
+        return switch (registryType) {
+            case "zookeeper" -> new ZookeeperRegistry(connectionAddr, config.getTimeout());
+            case "nacos" -> new NacosRegistry(connectionAddr, config.getTimeout());
+            default -> throw new DiscoveryException("Unsupported registry type: " + registryType);
+        };
     }
 
 }

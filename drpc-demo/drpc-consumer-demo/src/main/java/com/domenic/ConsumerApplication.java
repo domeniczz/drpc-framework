@@ -6,12 +6,15 @@ import com.domenic.constants.RegistryConstants;
 import com.domenic.drpc.DrpcBootstrap;
 import com.domenic.service.HelloDrpc;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author Domenic
  * @Classname ConsumerApplication
  * @Description Consumer Application
  * @Created by Domenic
  */
+@Slf4j
 public class ConsumerApplication {
 
     public static void main(String[] args) {
@@ -32,7 +35,8 @@ public class ConsumerApplication {
 
         // 4. Send request (to the service) and will get response
         HelloDrpc helloYrpc = reference.get();
-        helloYrpc.sayHello("Hello from Consumer");
+        String response = helloYrpc.sayHello("Hello from Consumer");
+        log.info("response: {}", response);
     }
 
 }

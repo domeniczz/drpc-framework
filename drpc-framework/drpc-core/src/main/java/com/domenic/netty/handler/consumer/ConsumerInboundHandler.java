@@ -1,4 +1,6 @@
-package com.domenic.netty.handler;
+package com.domenic.netty.handler.consumer;
+
+import com.domenic.drpc.DrpcBootstrap;
 
 import java.nio.charset.StandardCharsets;
 
@@ -14,11 +16,13 @@ import lombok.extern.slf4j.Slf4j;
  * @Created by Domenic
  */
 @Slf4j
-public class ClientInboundHandler extends SimpleChannelInboundHandler<ByteBuf> {
+public class ConsumerInboundHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, ByteBuf msg) throws Exception {
-        log.info("Client received: {}", msg.toString(StandardCharsets.UTF_8));
+        String response = msg.toString(StandardCharsets.UTF_8);
+        log.info("Client received: {}", response);
+        DrpcBootstrap.PENDING_REQUEST.get(1L).complete(response);
     }
 
 }

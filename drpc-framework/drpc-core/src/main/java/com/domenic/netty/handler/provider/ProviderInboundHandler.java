@@ -1,4 +1,4 @@
-package com.domenic.netty.handler;
+package com.domenic.netty.handler.provider;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -16,14 +16,13 @@ import lombok.extern.slf4j.Slf4j;
  * @Created by Domenic
  */
 @Slf4j
-public class ServerInboundHandler extends SimpleChannelInboundHandler<Object> {
+public class ProviderInboundHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, Object msg) throws Exception {
         ByteBuf m = (ByteBuf) msg;
         log.info("Server received: {}", m.toString(StandardCharsets.UTF_8));
-
-        context.channel().writeAndFlush(Unpooled.copiedBuffer("Server Received: " + LocalDateTime.now(), StandardCharsets.UTF_8));
+        context.channel().writeAndFlush(Unpooled.copiedBuffer(("Server Received: " + LocalDateTime.now()).getBytes(StandardCharsets.UTF_8)));
     }
 
 }

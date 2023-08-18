@@ -7,11 +7,12 @@ import com.domenic.config.ServiceConfig;
 import com.domenic.constants.NetworkConstants;
 import com.domenic.discovery.Registry;
 import com.domenic.discovery.builder.RegistryBuilder;
-import com.domenic.netty.handler.ServerInboundHandler;
+import com.domenic.netty.handler.provider.ProviderInboundHandler;
 
 import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -46,12 +47,18 @@ public class DrpcBootstrap {
     private Registry registry;
 
     /**
-     * <p>A list for published services</p>
+     * <p>a list for published services</p>
      * <p>key: interface's fully qualified name; value: ServiceConfig</p>
      */
     private static final Map<String, ServiceConfig<?>> SERVICES = new ConcurrentHashMap<>(16);
 
     public static final Map<InetSocketAddress, Channel> CHANNELS_CACHE = new ConcurrentHashMap<>(16);
+
+    /**
+     * hanging exposed CompletableFuture, waiting for response
+     * the key is the id of the pending request
+     */
+    public static final Map<Long, CompletableFuture<Object>> PENDING_REQUEST = new ConcurrentHashMap<>(128);
 
     private DrpcBootstrap() {
     }
@@ -160,7 +167,7 @@ public class DrpcBootstrap {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             // ChannelPipeline is a container of ChannelHandlers.
                             // ChannelPipeline provides an API for managing the processing of inbound and outbound data on a Channel.
-                            socketChannel.pipeline().addLast(new ServerInboundHandler());
+                            socketChannel.pipeline().addLast(new ProviderInboundHandler());
                         }
                     });
 

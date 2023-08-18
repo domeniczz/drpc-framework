@@ -1,13 +1,11 @@
 package com.domenic.netty;
 
-import com.domenic.netty.handler.ClientInboundHandler;
+import com.domenic.netty.handler.ConsumerChannelInitializer;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
@@ -22,16 +20,11 @@ public class NettyBootstrap {
 
     static {
         EventLoopGroup group = new NioEventLoopGroup();
-        // If only one EventLoopGroup is specified, it will be used both as a boss group and as a worker group.
+        // if only one EventLoopGroup is specified, it will be used both as a boss group and as a worker group
         BOOTSTRAP.group(group)
                 .channel(NioSocketChannel.class)
                 .option(ChannelOption.SO_KEEPALIVE, true)
-                .handler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        socketChannel.pipeline().addLast(new ClientInboundHandler());
-                    }
-                });
+                .handler(new ConsumerChannelInitializer());
     }
 
     private NettyBootstrap() {

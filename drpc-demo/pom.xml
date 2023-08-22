@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.domenic</groupId>
         <artifactId>drpc</artifactId>
-        <version>${project.version}</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>drpc-demo</artifactId>
-    <version>${project.version}</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>drpc-api</module>

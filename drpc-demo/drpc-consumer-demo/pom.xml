@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.domenic</groupId>
         <artifactId>drpc-demo</artifactId>
-        <version>${project.version}</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>drpc-consumer-demo</artifactId>
-    <version>${project.version}</version>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,17 +21,17 @@
         <dependency>
             <groupId>com.domenic</groupId>
             <artifactId>drpc-api</artifactId>
-            <version>${project.version}</version>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.domenic</groupId>
             <artifactId>drpc-core</artifactId>
-            <version>${project.version}</version>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.domenic</groupId>
             <artifactId>drpc-common</artifactId>
-            <version>${project.version}</version>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 

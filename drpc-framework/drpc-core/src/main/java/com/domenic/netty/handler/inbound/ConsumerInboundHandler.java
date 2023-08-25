@@ -1,4 +1,4 @@
-package com.domenic.netty.handler.consumer;
+package com.domenic.netty.handler.inbound;
 
 import com.domenic.drpc.DrpcBootstrap;
 

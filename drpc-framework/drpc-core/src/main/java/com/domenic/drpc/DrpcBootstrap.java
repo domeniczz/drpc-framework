@@ -7,7 +7,8 @@ import com.domenic.config.ServiceConfig;
 import com.domenic.constants.NetworkConstants;
 import com.domenic.discovery.Registry;
 import com.domenic.discovery.builder.RegistryBuilder;
-import com.domenic.netty.handler.provider.ProviderInboundHandler;
+import com.domenic.netty.handler.inbound.ProviderInboundHandler;
+import com.domenic.netty.initializer.ProviderChannelInitializer;
 
 import java.net.InetSocketAddress;
 import java.util.List;
@@ -162,14 +163,7 @@ public class DrpcBootstrap {
                     // this is done by binding to the "wildcard" address (0.0.0.0 in IPv4 or :: in IPv6)
                     .localAddress(new InetSocketAddress(host, port))
                     // ChannelInitializer is a special handler that is purposed to help a user configure a new Channel.
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
-                        @Override
-                        protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            // ChannelPipeline is a container of ChannelHandlers.
-                            // ChannelPipeline provides an API for managing the processing of inbound and outbound data on a Channel.
-                            socketChannel.pipeline().addLast(new ProviderInboundHandler());
-                        }
-                    });
+                    .childHandler(new ProviderChannelInitializer());
 
             // bind and start to accept incoming connections.
             ChannelFuture f = b.bind().sync();

@@ -4,17 +4,17 @@ import com.domenic.discovery.Registry;
 import com.domenic.drpc.DrpcBootstrap;
 import com.domenic.exceptions.NetworkException;
 import com.domenic.netty.NettyBootstrap;
+import com.domenic.transport.message.RequestMessage;
+import com.domenic.transport.message.RequestPayload;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -46,7 +46,8 @@ public class ConsumerInvocationHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         InetSocketAddress serviceAddr = lookupAvailableService();
         Channel channel = establishChannel(serviceAddr);
-        return sendMessage(channel, "HELLO FROM CLIENT!!!!");
+        RequestMessage message = packageMessage(method, args);
+        return sendMessage(channel, message);
     }
 
     /**
@@ -123,12 +124,36 @@ public class ConsumerInvocationHandler implements InvocationHandler {
     }
 
     /**
+     * encapsulate the message to be sent
+     * @param method method to call
+     * @param args arguments of the method
+     * @return message to be sent
+     */
+    private RequestMessage packageMessage(Method method, Object[] args) {
+        RequestPayload requestPayload = RequestPayload.builder()
+                .interfaceName(serviceInterface.getName())
+                .methodName(method.getName())
+                .parametersType(method.getParameterTypes())
+                .parametersValue(args)
+                .returnType(method.getReturnType())
+                .build();
+
+        return RequestMessage.builder()
+                .requestId(1L)
+                .compressType((byte) 1)
+                .requestType((byte) 1)
+                .serializeType((byte) 1)
+                .requestPayload(requestPayload)
+                .build();
+    }
+
+    /**
      * Send message through the channel
      * @param channel channel
      * @param message message
      * @return response
      */
-    private Object sendMessage(Channel channel, String message) {
+    private Object sendMessage(Channel channel, RequestMessage message) {
         if (!channel.isActive()) {
             log.error("Channel is inactive, can't send message");
             throw new NetworkException("Channel is inactive");
@@ -140,19 +165,18 @@ public class ConsumerInvocationHandler implements InvocationHandler {
             DrpcBootstrap.PENDING_REQUEST.put(1L, completableFuture);
 
             // Async: add a listener to the ChannelFuture which will be notified when message is sent
-            channel.writeAndFlush(Unpooled.copiedBuffer(message.getBytes(StandardCharsets.UTF_8)))
-                    .addListener((ChannelFutureListener) promise -> {
-                        // the response of 'promise' is the result of `writeAndFlush()`
-                        // and once the message has been written out, 'promise' will be completed
-                        // thus, we can't get server-side response with `complete()` in `CompletableFuture`
+            channel.writeAndFlush(message).addListener((ChannelFutureListener) promise -> {
+                // the response of 'promise' is the result of `writeAndFlush()`
+                // and once the message has been written out, 'promise' will be completed
+                // thus, we can't get server-side response with `complete()` in `CompletableFuture`
 
-                        if (!promise.isSuccess()) {
-                            Throwable cause = promise.cause();
-                            completableFuture.completeExceptionally(promise.cause());
-                            log.error("Exception when sending message, {}", cause.getMessage());
-                            throw new NetworkException("Exception when sending message: " + cause);
-                        }
-                    });
+                if (!promise.isSuccess()) {
+                    Throwable cause = promise.cause();
+                    completableFuture.completeExceptionally(promise.cause());
+                    log.error("Exception when sending message, {}", cause.getMessage());
+                    throw new NetworkException("Exception when sending message: " + cause);
+                }
+            });
 
             // block until the response is received or complete method in CompletableFuture is executed
             // the complete method will be called at the end of incoming pipeline (the last inbound handler)

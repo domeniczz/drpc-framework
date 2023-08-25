@@ -1,6 +1,6 @@
 package com.domenic.netty;
 
-import com.domenic.netty.handler.ConsumerChannelInitializer;
+import com.domenic.netty.initializer.ConsumerChannelInitializer;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelOption;

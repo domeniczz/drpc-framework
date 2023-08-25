@@ -1,4 +1,4 @@
-package com.domenic.netty.handler.inbound;
+package com.domenic.netty.handler.provider;
 
 import com.domenic.exceptions.DecodeException;
 import com.domenic.exceptions.SerializationException;
@@ -46,15 +46,11 @@ public class MessageDecoderHandler extends LengthFieldBasedFrameDecoder {
     }
 
     @Override
-    protected Object decode(ChannelHandlerContext ctx, ByteBuf in) {
+    protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
         // decode the message into a byte array
-        try {
-            Object obj = super.decode(ctx, in);
-            if (obj instanceof ByteBuf byteBuf) {
-                return decodeFrame(byteBuf);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        Object obj = super.decode(ctx, in);
+        if (obj instanceof ByteBuf byteBuf) {
+            return decodeFrame(byteBuf);
         }
         return null;
     }

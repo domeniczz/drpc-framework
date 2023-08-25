@@ -1,4 +1,4 @@
-package com.domenic.netty.handler.inbound;
+package com.domenic.netty.handler.provider;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;

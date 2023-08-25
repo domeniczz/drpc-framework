@@ -1,4 +1,4 @@
-package com.domenic.netty.handler.outbound;
+package com.domenic.netty.handler.consumer;
 
 import com.domenic.exceptions.SerializationException;
 import com.domenic.transport.message.MessageFormatConstant;

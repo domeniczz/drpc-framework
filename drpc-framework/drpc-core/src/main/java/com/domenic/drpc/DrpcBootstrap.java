@@ -7,7 +7,7 @@ import com.domenic.config.ServiceConfig;
 import com.domenic.constants.NetworkConstants;
 import com.domenic.discovery.Registry;
 import com.domenic.discovery.builder.RegistryBuilder;
-import com.domenic.netty.handler.inbound.ProviderInboundHandler;
+import com.domenic.netty.handler.provider.ProviderInboundHandler;
 import com.domenic.netty.initializer.ProviderChannelInitializer;
 
 import java.net.InetSocketAddress;

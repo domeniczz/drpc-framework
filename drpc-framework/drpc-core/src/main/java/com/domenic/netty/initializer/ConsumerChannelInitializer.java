@@ -1,6 +1,6 @@
 package com.domenic.netty.initializer;
 
-import com.domenic.netty.handler.outbound.MessageEncoderHandler;
+import com.domenic.netty.handler.consumer.MessageEncoderHandler;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;

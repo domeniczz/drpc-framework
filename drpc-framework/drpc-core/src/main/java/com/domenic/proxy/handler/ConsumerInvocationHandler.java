@@ -6,6 +6,7 @@ import com.domenic.exceptions.NetworkException;
 import com.domenic.netty.NettyBootstrap;
 import com.domenic.transport.message.RequestMessage;
 import com.domenic.transport.message.RequestPayload;
+import com.domenic.transport.message.Types;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -141,7 +142,7 @@ public class ConsumerInvocationHandler implements InvocationHandler {
         return RequestMessage.builder()
                 .requestId(1L)
                 .compressType((byte) 1)
-                .requestType((byte) 1)
+                .requestType(Types.RequestType.REQUEST.getId())
                 .serializeType((byte) 1)
                 .requestPayload(requestPayload)
                 .build();

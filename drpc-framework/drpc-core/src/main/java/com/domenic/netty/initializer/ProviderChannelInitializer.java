@@ -1,6 +1,7 @@
 package com.domenic.netty.initializer;
 
 import com.domenic.netty.handler.provider.MessageDecoderHandler;
+import com.domenic.netty.handler.provider.MethodCallHandler;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -21,7 +22,8 @@ public class ProviderChannelInitializer extends ChannelInitializer<SocketChannel
         // ChannelPipeline provides an API for managing the processing of inbound and outbound data on a Channel.
         socketChannel.pipeline()
                 .addLast(new LoggingHandler(LogLevel.DEBUG))
-                .addLast(new MessageDecoderHandler());
+                .addLast(new MessageDecoderHandler())
+                .addLast(new MethodCallHandler());
         // .addLast(new ProviderInboundHandler());
     }
 

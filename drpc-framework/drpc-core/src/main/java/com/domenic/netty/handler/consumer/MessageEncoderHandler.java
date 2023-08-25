@@ -4,6 +4,7 @@ import com.domenic.exceptions.SerializationException;
 import com.domenic.transport.message.MessageFormatConstant;
 import com.domenic.transport.message.RequestMessage;
 import com.domenic.transport.message.RequestPayload;
+import com.domenic.transport.message.Types;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,22 +34,30 @@ public class MessageEncoderHandler extends MessageToByteEncoder<RequestMessage> 
         // header length
         out.writeShort(MessageFormatConstant.HEADER_LENGTH_VALUE);
         // full length (unknown yet, move writer index 4 bytes forward)
-        out.writerIndex(out.writerIndex() + 4);
+        out.writerIndex(out.writerIndex() + MessageFormatConstant.FULL_LENGTH_BYTES);
 
         out.writeByte(msg.getRequestType());
         out.writeByte(msg.getSerializeType());
         out.writeByte(msg.getCompressType());
         out.writeLong(msg.getRequestId());
 
-        // message body
-        byte[] body = bodyToBytes(msg.getRequestPayload());
-        out.writeBytes(body);
+        int bodyLength = 0;
+
+        // if request type is normal request, write message body
+        if (msg.getRequestType() == Types.RequestType.REQUEST.getId()) {
+            // get message body in byte array
+            byte[] body = bodyToBytes(msg.getRequestPayload());
+            out.writeBytes(body);
+            bodyLength = body.length;
+        }
 
         int currentWriterIndex = out.writerIndex();
-        // place writer index to beginning of "header length"
-        out.writerIndex(7);
-        // write header length value
-        out.writeInt(MessageFormatConstant.HEADER_LENGTH_VALUE + body.length);
+        // place writer index to beginning of "full length"
+        out.writerIndex(MessageFormatConstant.MAGIC_VALUE.length +
+                MessageFormatConstant.VERSION_BYTES +
+                MessageFormatConstant.HEADER_LENGTH_BYTES);
+        // write full length value
+        out.writeInt(MessageFormatConstant.HEADER_LENGTH_VALUE + bodyLength);
 
         // return writer index to the end
         out.writerIndex(currentWriterIndex);

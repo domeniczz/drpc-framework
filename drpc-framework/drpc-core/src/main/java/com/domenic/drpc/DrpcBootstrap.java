@@ -7,7 +7,6 @@ import com.domenic.config.ServiceConfig;
 import com.domenic.constants.NetworkConstants;
 import com.domenic.discovery.Registry;
 import com.domenic.discovery.builder.RegistryBuilder;
-import com.domenic.netty.handler.provider.ProviderInboundHandler;
 import com.domenic.netty.initializer.ProviderChannelInitializer;
 
 import java.net.InetSocketAddress;
@@ -19,10 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,7 +48,7 @@ public class DrpcBootstrap {
      * <p>a list for published services</p>
      * <p>key: interface's fully qualified name; value: ServiceConfig</p>
      */
-    private static final Map<String, ServiceConfig<?>> SERVICES = new ConcurrentHashMap<>(16);
+    public static final Map<String, ServiceConfig<?>> SERVICES = new ConcurrentHashMap<>(16);
 
     public static final Map<InetSocketAddress, Channel> CHANNELS_CACHE = new ConcurrentHashMap<>(16);
 

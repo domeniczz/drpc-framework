@@ -5,6 +5,7 @@ import com.domenic.exceptions.SerializationException;
 import com.domenic.transport.message.MessageFormatConstant;
 import com.domenic.transport.message.RequestMessage;
 import com.domenic.transport.message.RequestPayload;
+import com.domenic.transport.message.Types;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -100,7 +101,7 @@ public class MessageDecoderHandler extends LengthFieldBasedFrameDecoder {
         message.setCompressType(compressType);
         message.setSerializeType(serializeType);
 
-        if (requestType == 2) {
+        if (requestType == Types.RequestType.HEARTBEAT.getId()) {
             return message;
         }
 
@@ -119,6 +120,7 @@ public class MessageDecoderHandler extends LengthFieldBasedFrameDecoder {
      * Decode the message body from byte array
      */
     private RequestPayload bytesToBody(byte[] bytes) {
+        // TODO: add decompress
         try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
             return (RequestPayload) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
